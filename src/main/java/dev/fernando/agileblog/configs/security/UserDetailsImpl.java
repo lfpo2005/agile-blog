@@ -1,4 +1,4 @@
-package dev.fernando.agileblog.security;
+package dev.fernando.agileblog.configs.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.fernando.agileblog.models.UserModel;

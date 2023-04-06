@@ -1,4 +1,4 @@
-package dev.fernando.agileblog.security;
+package dev.fernando.agileblog.configs.security;
 
 import io.jsonwebtoken.*;
 import lombok.extern.log4j.Log4j2;

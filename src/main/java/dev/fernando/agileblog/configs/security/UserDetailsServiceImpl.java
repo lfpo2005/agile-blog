@@ -1,4 +1,4 @@
-package dev.fernando.agileblog.security;
+package dev.fernando.agileblog.configs.security;
 
 import dev.fernando.agileblog.models.UserModel;
 import dev.fernando.agileblog.repositories.UserRepository;

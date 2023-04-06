@@ -1,4 +1,4 @@
-package dev.fernando.agileblog.security;
+package dev.fernando.agileblog.configs.security;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

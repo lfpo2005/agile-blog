@@ -1,4 +1,4 @@
-package dev.fernando.agileblog.security;
+package dev.fernando.agileblog.configs.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
