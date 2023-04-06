@@ -18,5 +18,7 @@ public interface CategoryService {
 
     void delete(CategoryModel categoryModel);
 
-    List<CategoryModel> findAll(Specification<CategoryModel> spec);
+    Page<CategoryModel> findAll(Specification<CategoryModel> spec, Pageable pageable);
+
+    boolean existsByName(String name);
 }

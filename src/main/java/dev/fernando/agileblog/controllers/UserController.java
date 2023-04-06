@@ -3,8 +3,8 @@ package dev.fernando.agileblog.controllers;
 import com.fasterxml.jackson.annotation.JsonView;
 import dev.fernando.agileblog.dtos.UserDto;
 import dev.fernando.agileblog.models.UserModel;
-import dev.fernando.agileblog.security.AuthenticationCurrentUserService;
-import dev.fernando.agileblog.security.UserDetailsImpl;
+import dev.fernando.agileblog.configs.security.AuthenticationCurrentUserService;
+import dev.fernando.agileblog.configs.security.UserDetailsImpl;
 import dev.fernando.agileblog.services.UserService;
 import dev.fernando.agileblog.specifications.SpecificationTemplate;
 import lombok.extern.log4j.Log4j2;
@@ -29,6 +29,7 @@ import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 
 @Log4j2
 @RestController

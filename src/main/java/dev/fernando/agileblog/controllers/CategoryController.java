@@ -36,6 +36,10 @@ public class CategoryController {
     public ResponseEntity<Object> saveCategory(@RequestBody @Valid CategoryDto categoryDto){
         log.debug("POST saveCategory CategoriaDto received: ------> {}", categoryDto.toString());
 
+        if(categoryService.existsByName(categoryDto.getName())) {
+            log.warn("Category {} is Already Taken!: ------> ", categoryDto.getName());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Category is Already Taken!");
+        }
         var categoryModel = new CategoryModel();
 
         BeanUtils.copyProperties(categoryDto, categoryModel);
@@ -61,26 +65,4 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).body("Category deleted successfully!");
     }
 
-   // @PermitAll
-    @GetMapping
-    public ResponseEntity<List<CategoryModel>> getAllCategory(SpecificationTemplate.CategorySpec spec,
-                                                              /*@PageableDefault(page = 0, size = 10,
-                                                                   sort = "categoryId", direction = Sort.Direction.ASC) Pageable pageable,*/
-                                                              @RequestParam(required = false) UUID categoryId) {
-
-        return ResponseEntity.status(HttpStatus.OK).body(categoryService.findAll(spec));
-    }
-    @PermitAll
-    @GetMapping("/{categoryId}")
-    public ResponseEntity<Object> getOneCategory(@PathVariable(value="categoryId") UUID categoryId){
-        Optional<CategoryModel> categoryModelOptional = categoryService.findById(categoryId);
-        if(!categoryModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category Not Found.");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(categoryModelOptional.get());
-    }
 }
-/*@And({
-           @Spec(path = "name", spec = Like.class)
-    })
-    public interface CategorySpec extends Specification<CategoryModel> {}*/

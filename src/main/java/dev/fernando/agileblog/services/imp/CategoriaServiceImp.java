@@ -37,9 +37,13 @@ public class CategoriaServiceImp implements CategoryService {
     }
 
     @Override
-    public List<CategoryModel> findAll(Specification<CategoryModel> spec) {
-        return categoryRepository.findAll(spec);
+    public Page<CategoryModel> findAll(Specification<CategoryModel> spec, Pageable pageable) {
+        return categoryRepository.findAll(spec, pageable);
     }
 
+    @Override
+    public boolean existsByName(String name) {
+        return categoryRepository.existsByName(name);
+    }
 
 }

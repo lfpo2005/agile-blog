@@ -9,7 +9,7 @@ import dev.fernando.agileblog.enums.UserStatus;
 import dev.fernando.agileblog.enums.UserType;
 import dev.fernando.agileblog.models.RoleModel;
 import dev.fernando.agileblog.models.UserModel;
-import dev.fernando.agileblog.security.JwtProvider;
+import dev.fernando.agileblog.configs.security.JwtProvider;
 import dev.fernando.agileblog.services.RoleService;
 import dev.fernando.agileblog.services.UserService;
 import lombok.extern.log4j.Log4j2;

@@ -1,6 +1,7 @@
 package dev.fernando.agileblog.models;
 
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "TB_CATEGORY")
-public class CategoryModel implements Serializable {
+public class CategoryModel extends RepresentationModel<CategoryModel>  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

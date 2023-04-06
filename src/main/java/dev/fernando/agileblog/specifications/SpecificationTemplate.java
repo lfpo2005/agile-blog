@@ -4,6 +4,7 @@ import dev.fernando.agileblog.models.CategoryModel;
 import dev.fernando.agileblog.models.UserModel;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
@@ -22,7 +23,7 @@ public class SpecificationTemplate {
     public interface UserSpec extends Specification<UserModel> {}
 
     @And({
-            @Spec(path = "name", spec = Like.class)
+            @Spec(path = "name", spec = LikeIgnoreCase.class)
     })
     public interface CategorySpec extends Specification<CategoryModel> {}
 
