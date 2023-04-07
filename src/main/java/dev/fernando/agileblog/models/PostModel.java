@@ -19,7 +19,7 @@ public class PostModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID postagemId;
+    private UUID postId;
 
     @Column(nullable = false, length = 50)
     private String title;
@@ -27,7 +27,7 @@ public class PostModel implements Serializable {
     @Column(nullable = false, length = 50)
     private String author;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String post;
 
     private int likes;
@@ -48,5 +48,4 @@ public class PostModel implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private CategoryModel category;
-
 }

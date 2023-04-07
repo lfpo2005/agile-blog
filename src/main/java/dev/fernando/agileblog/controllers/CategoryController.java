@@ -26,12 +26,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/categories")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@PreAuthorize("hasAnyRole('ADMIN')")
 public class CategoryController {
 
     @Autowired
     CategoryService categoryService;
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Object> saveCategory(@RequestBody @Valid CategoryDto categoryDto){
         log.debug("POST saveCategory CategoriaDto received: ------> {}", categoryDto.toString());
@@ -64,5 +64,4 @@ public class CategoryController {
         log.info("Category deleted successfully categoryId {} ", categoryId);
         return ResponseEntity.status(HttpStatus.OK).body("Category deleted successfully!");
     }
-
 }

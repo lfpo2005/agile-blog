@@ -74,7 +74,7 @@ public class UserController {
             throw new AccessDeniedException("Forbidden");
         }
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<Object> deleteUser(@PathVariable(value = "userId") UUID userId) {
         log.debug("DELETE deleteUser userId received: ------> {}", userId);

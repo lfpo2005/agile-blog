@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        String hierarchy = "ROLE_ADMIN > ROLE_AUTHOR \n ROLE_AUTHOR > ROLE_USER";
+        String hierarchy = "ROLE_ADMIN > ROLE_INSTRUCTOR \n ROLE_INSTRUCTOR > ROLE_AUTHOR \n ROLE_AUTHOR > ROLE_STUDENT \n ROLE_STUDENT > ROLE_USER";
         roleHierarchy.setHierarchy(hierarchy);
         return roleHierarchy;
     }
@@ -53,6 +53,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .and()
+                .httpBasic()
                 .and()
                 .csrf().disable();
 
