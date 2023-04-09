@@ -39,4 +39,9 @@ public class PostServiceImp implements PostService {
         return postRepository.findAll(spec, pageable);
     }
 
+    @Override
+    public Page<PostModel> findAll(Specification<PostModel> spec, Pageable pageable) {
+        return postRepository.findAll(spec, pageable);
+    }
+
 }

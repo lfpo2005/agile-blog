@@ -50,6 +50,7 @@ public class PublicController {
 
     @GetMapping("/categories/{categoryId}")
     public ResponseEntity<Object> getOneCategory(@PathVariable(value="categoryId") UUID categoryId){
+
         Optional<CategoryModel> categoryModelOptional = categoryService.findById(categoryId);
         if(!categoryModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category Not Found.");
@@ -59,16 +60,17 @@ public class PublicController {
 
 
     @GetMapping("/categories/{categoryId}/posts")
-    public ResponseEntity<Page<PostModel>> getAllPost(@PathVariable(value="categoryId") UUID categoryId,
+    public ResponseEntity<Page<PostModel>> getAllPosts(@PathVariable(value="categoryId") UUID categoryId,
                                                          SpecificationTemplate.PostSpec spec,
-                                                         @PageableDefault(page = 0, size = 10, sort = "postId", direction = Sort.Direction.ASC) Pageable pageable){
+                                                         @PageableDefault(page = 0, size = 10, sort = "postId",
+                                                                 direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(postService.findAllByCategory(SpecificationTemplate
                                                                     .postCategoryId(categoryId)
                                                                     .and(spec), pageable));
     }
 
     @GetMapping("/categories/{categoryId}/posts/{postId}")
-    public ResponseEntity<Object> getOneModule(@PathVariable(value="categoryId") UUID categoryId,
+    public ResponseEntity<Object> getOnePost(@PathVariable(value="categoryId") UUID categoryId,
                                                @PathVariable(value="postId") UUID postId){
         Optional<PostModel> postModelOptional = postService.findPostIntoCategory(categoryId, postId);
         if(!postModelOptional.isPresent()){
@@ -76,4 +78,37 @@ public class PublicController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(postModelOptional.get());
     }
+
+    @GetMapping("/categories/posts")
+    public ResponseEntity<Page<PostModel>> getAllPosts(SpecificationTemplate.PostSpec spec,
+                                                       @PageableDefault(page = 0, size = 10,
+                                                               sort = "postId", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        Page<PostModel> postModelPage = postService.findAll(spec, pageable);
+
+        if (!postModelPage.isEmpty()) {
+            for (PostModel post : postModelPage.toList()){
+                post.add(linkTo(methodOn(PublicController.class).getOnePost(post.getCategory().getCategoryId(), post.getPostId())).withSelfRel());
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(postModelPage);
+    }
+
+    /*
+    * @GetMapping("/categories")
+    public ResponseEntity<Page<CategoryModel>> getAllCategory(SpecificationTemplate.CategorySpec spec,
+                                                              @PageableDefault(page = 0, size = 10,
+                                                                      sort = "categoryId", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        Page<CategoryModel> categoryModelPage = categoryService.findAll(spec, pageable);
+
+        if (!categoryModelPage.isEmpty()) {
+            for (CategoryModel category : categoryModelPage.toList()){
+                category.add(linkTo(methodOn(PublicController.class).getOneCategory(category.getCategoryId())).withSelfRel());
+            }
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(categoryModelPage);
+    }*/
+
 }

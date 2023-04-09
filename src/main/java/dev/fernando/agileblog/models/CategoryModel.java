@@ -1,10 +1,14 @@
 package dev.fernando.agileblog.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -19,4 +23,9 @@ public class CategoryModel extends RepresentationModel<CategoryModel>  implement
 
     @Column(nullable = false, unique = true, length = 50)
     private String name;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY )
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<PostModel> posts;
 }

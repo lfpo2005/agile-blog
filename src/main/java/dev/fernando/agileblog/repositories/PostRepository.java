@@ -18,5 +18,4 @@ public interface PostRepository extends JpaRepository<PostModel, UUID>, JpaSpeci
     @Query(value = "select * from tb_post where category_category_id = :categoryId and post_id = :postId", nativeQuery = true)
     Optional<PostModel> findPostIntoCategory(@Param("categoryId") UUID categoryId, @Param("postId") UUID postId);
 
-
 }
