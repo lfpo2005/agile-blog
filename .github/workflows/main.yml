@@ -23,7 +23,7 @@ jobs:
       with:
         context: .
         push: true
-        tags:
+        tags: |
           lfpo2005/agile-blog:v1
           lfpo2005/agile-blog:latest
 
