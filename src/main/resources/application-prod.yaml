@@ -1,0 +1,78 @@
+server:
+  port: 8080
+  contextPath: /blog
+
+spring:
+  datasource:
+    url:  jdbc:postgresql://localhost:5432/fernand1_api-blog?autoReconnect=true
+    username: fernand1_api-blog
+    password: '@Clf197197'
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 20000
+      minimum-idle: 200
+      maximum-pool-size: 550
+      idle-timeout: 10000
+      pool-name: PoolHikari
+      auto-commit: false
+    dbcp2:
+      pool-prepared-statements: true
+      max-open-prepared-statements: 550
+    transaction:
+      rollback-on-commit-failure: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      jdbc:
+        lob.non-contextual-creation: true
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 4
+          order_inserts: true
+          order_updates: true
+        show_sql: true
+  server:
+    tomcat:
+      max-connections: 50000
+      min-spare-threads: 1000
+  session:
+    jdbc:
+      cleanup-cron: "0 0 4 * * *"
+  mvc:
+    throw-exception-if-no-handler-found: true
+    static-path-pattern: /static/**
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+  output:
+    ansi:
+      enabled: Always
+  mail:
+    host: mocha6007.mochahost.com
+    port: 465
+    username: contato@metodologia-agil.com.br
+    password: '@Clf197197'
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: mocha6007.mochahost.com
+  logging:
+    level:
+      com.ead: TRACE
+      root: INFO
+      org.springframework.web: DEBUG
+      org.hibernate: INFO
+
+ead:
+  auth:
+    jwtSecret: t7w!z%C*F-JaNdRgUkXp2s5v8x/A?D(G+KbPeShVmYq3t6w9z$B&E)H@McQfTjWn
+    jwtExpirationMs: 14400000

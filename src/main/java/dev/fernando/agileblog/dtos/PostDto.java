@@ -1,8 +1,8 @@
 package dev.fernando.agileblog.dtos;
 
-import dev.fernando.agileblog.models.CategoryModel;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -16,5 +16,5 @@ public class PostDto {
     private boolean favorite = false;
     private String description;
     private String imgUrl;
-    private CategoryModel category;
+    private List<String> tags;
 }

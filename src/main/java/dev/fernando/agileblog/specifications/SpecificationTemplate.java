@@ -1,6 +1,5 @@
 package dev.fernando.agileblog.specifications;
 
-import dev.fernando.agileblog.models.CategoryModel;
 import dev.fernando.agileblog.models.PostModel;
 import dev.fernando.agileblog.models.UserModel;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
@@ -25,23 +24,11 @@ public class SpecificationTemplate {
     })
     public interface UserSpec extends Specification<UserModel> {}
 
-    @And({
-            @Spec(path = "name", spec = LikeIgnoreCase.class)
-    })
-    public interface CategorySpec extends Specification<CategoryModel> {}
 
     @And({
             @Spec(path = "title", spec = LikeIgnoreCase.class)
     })
     public interface PostSpec extends Specification<PostModel> {}
 
-    public static Specification<PostModel> postCategoryId(final UUID categoryId) {
-        return (root, query, cb) -> {
-            query.distinct(true);
-            Root<PostModel> post = root;
-            Root<CategoryModel> category = query.from(CategoryModel.class);
-            Expression<Collection<PostModel>> categoriesPosts = category.get("posts");
-            return cb.and(cb.equal(category.get("categoryId"), categoryId), cb.isMember(post, categoriesPosts));
-        };
-    }
+
 }

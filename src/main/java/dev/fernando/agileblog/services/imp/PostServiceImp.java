@@ -30,18 +30,13 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public Optional<PostModel> findPostIntoCategory(UUID categoryId, UUID postId) {
-        return postRepository.findPostIntoCategory(categoryId, postId);
-    }
-
-    @Override
-    public Page<PostModel> findAllByCategory(Specification<PostModel> spec, Pageable pageable) {
-        return postRepository.findAll(spec, pageable);
-    }
-
-    @Override
     public Page<PostModel> findAll(Specification<PostModel> spec, Pageable pageable) {
         return postRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    public Optional<PostModel> findById(UUID postId) {
+        return postRepository.findById(postId);
     }
 
 }
