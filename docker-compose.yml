@@ -26,18 +26,7 @@ services:
       - spring_db
     networks:
       - lfpo-network
-#
-#  nginx:
-#    image: nginx:latest
-#    container_name: agileblog-nginx
-#    restart: always
-#    ports:
-#      - 80:80
-#    volumes:
-#      - ./extras/nginx.conf:/etc/nginx/nginx.conf
-#      - ./extras/dist/front-blog:/usr/share/nginx/html
-    networks:
-      - lfpo-network
+
 
 networks:
   lfpo-network:
