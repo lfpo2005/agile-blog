@@ -1,6 +1,7 @@
 FROM openjdk:11-jdk-slim
 
-COPY target/app.jar /app.jar
+COPY ${JAR_FILE} app.jar
+ARG JAR_FILE=target/*.jar
 
 ENV PORT 8080
 ENV SPRING_DATASOURCE_USERNAME postgres
