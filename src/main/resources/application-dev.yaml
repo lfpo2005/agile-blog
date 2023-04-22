@@ -1,8 +1,8 @@
 server:
   port: 8087
   forward-headers-strategy: native
-#  servlet:
-#    context-path: '/blog'
+  servlet:
+    context-path: '/blog'
 
 spring:
   datasource:
@@ -47,8 +47,6 @@ spring:
           ssl:
             enable: true
             trust: mocha6007.mochahost.com
-
-
 logging:
   level:
     com.ead: TRACE

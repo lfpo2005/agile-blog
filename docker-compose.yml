@@ -1,0 +1,44 @@
+version: "3"
+services:
+
+  spring_db:
+    image: postgres:11
+    container_name: agileblog
+    restart: always
+    volumes:
+      - ./extras/postgres_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=agileblog
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    networks:
+      - lfpo-network
+
+  spring_app:
+    build: .
+    container_name: agileblog-app
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - spring_db
+    networks:
+      - lfpo-network
+#
+#  nginx:
+#    image: nginx:latest
+#    container_name: agileblog-nginx
+#    restart: always
+#    ports:
+#      - 80:80
+#    volumes:
+#      - ./extras/nginx.conf:/etc/nginx/nginx.conf
+#      - ./extras/dist/front-blog:/usr/share/nginx/html
+    networks:
+      - lfpo-network
+
+networks:
+  lfpo-network:
+    driver: bridge
