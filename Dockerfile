@@ -1,11 +1,15 @@
-FROM openjdk:11-jdk-slim
+#FROM openjdk:11-jdk-slim
+#ARG JAR_FILE=target/*.jar
+#COPY ${JAR_FILE} app.jar
+#ENTRYPOINT ["java","-jar","/app.jar"]
 
-COPY ${JAR_FILE} app.jar
-ARG JAR_FILE=target/*.jar
+FROM maven:3.6.3-jdk-11-slim AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src src
+RUN mvn package -DskipTests
 
-ENV PORT 8080
-ENV SPRING_DATASOURCE_USERNAME postgres
-ENV SPRING_DATASOURCE_PASSWORD postgres
-ENV SPRING_DATASOURCE_URL jdbc:postgresql://spring_db:5432/agileblog
-
-CMD ["java", "-jar", "/app.jar"]
+FROM openjdk:11-jre-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app/app.jar"]

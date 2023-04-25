@@ -1,4 +1,4 @@
-version: "3"
+version: "3.9"
 services:
 
   spring_db:
@@ -16,12 +16,18 @@ services:
     networks:
       - lfpo-network
 
-  spring_app:
-    build: .
-    container_name: agileblog-app
+  agile-blog:
+    image: lfpo2005/agile-blog
     restart: always
+    build: .
+    working_dir: /agile-blog
+    environment:
+      SPRING.DATASOURCE.URL: jdbc:postgresql://spring_db:5432/agileblog
+      SPRING.DATASOURCE.USERNAME: postgres
+      SPRING.DATASOURCE.PASSWORD: postgres
     ports:
       - 8080:8080
+    command: java -jar /agile-blog/app.jar
     depends_on:
       - spring_db
     networks:
