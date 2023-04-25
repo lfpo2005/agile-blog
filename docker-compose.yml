@@ -33,7 +33,6 @@ services:
     networks:
       - lfpo-network
 
-
 networks:
   lfpo-network:
     driver: bridge
