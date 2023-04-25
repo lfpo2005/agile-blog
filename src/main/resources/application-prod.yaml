@@ -6,7 +6,7 @@ server:
 
 spring:
   datasource:
-    url:  jdbc:postgresql://localhost:5432/agileblog
+    url: jdbc:postgresql://spring_db:5432/agileblog
     username: postgres
     password: postgres
   type: com.zaxxer.hikari.HikariDataSource
