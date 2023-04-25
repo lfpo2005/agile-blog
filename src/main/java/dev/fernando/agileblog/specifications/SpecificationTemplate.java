@@ -1,5 +1,6 @@
 package dev.fernando.agileblog.specifications;
 
+import dev.fernando.agileblog.models.DictionaryModel;
 import dev.fernando.agileblog.models.PostModel;
 import dev.fernando.agileblog.models.UserModel;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
@@ -30,5 +31,8 @@ public class SpecificationTemplate {
     })
     public interface PostSpec extends Specification<PostModel> {}
 
-
+    @And({
+            @Spec(path = "word", spec = LikeIgnoreCase.class)
+    })
+    public interface DictionarySpec extends Specification<DictionaryModel> {}
 }
