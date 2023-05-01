@@ -2,11 +2,9 @@ package dev.fernando.agileblog.controllers;
 
 import dev.fernando.agileblog.configs.security.UserDetailsImpl;
 import dev.fernando.agileblog.dtos.PostDto;
-import dev.fernando.agileblog.models.ImageModel;
 import dev.fernando.agileblog.models.PostModel;
 import dev.fernando.agileblog.services.ImageService;
 import dev.fernando.agileblog.services.PostService;
-import dev.fernando.agileblog.util.ConvertImage;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
@@ -40,13 +36,9 @@ public class PostContoller {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/posts")
     public ResponseEntity<Object> savePost(@RequestBody @Valid PostDto postDto,
-                                           Authentication authentication, @RequestParam("imgUrl") MultipartFile file) throws IOException {
+                                           Authentication authentication) {
 
         log.debug("POST savePost postDto received: ------> {}", postDto.toString());
-
-        ImageModel imageModel = ConvertImage.convertImage(file, 760, 190);
-        imageModel = imageService.save(imageModel);
-        postDto.setImage(imageModel);
 
 
         var postModel = new PostModel();

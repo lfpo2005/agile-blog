@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class DictionaryController {
         return ResponseEntity.status(HttpStatus.OK).body(dictionaryModelOptional.get());
 
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<DictionaryDto> createDictionary(@RequestBody DictionaryDto dictionaryDto) {
         DictionaryModel dictionaryModel = convertDtoToModel(dictionaryDto);
@@ -64,7 +65,7 @@ public class DictionaryController {
         DictionaryDto createdDictionaryDto = convertModelToDto(createdDictionaryModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDictionaryDto);
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/{dictionaryId}")
     public ResponseEntity<DictionaryDto> updateDictionary(@PathVariable UUID dictionaryId,
                                                           @RequestBody DictionaryDto dictionaryDto) {
@@ -78,7 +79,7 @@ public class DictionaryController {
             return ResponseEntity.ok(updatedDictionaryDto);
         }
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/{dictionaryId}")
     public ResponseEntity<Void> deleteDictionary(@PathVariable UUID dictionaryId) {
         boolean deleted = dictionaryService.deleteDictionary(dictionaryId);

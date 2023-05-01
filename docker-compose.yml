@@ -16,6 +16,18 @@ services:
     networks:
       - lfpo-network
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=youremail@example.com
+      - PGADMIN_DEFAULT_PASSWORD=yourpassword
+    ports:
+      - 8081:80
+    networks:
+      - lfpo-network
+
   agile-blog:
     image: lfpo2005/agile-blog
     restart: always

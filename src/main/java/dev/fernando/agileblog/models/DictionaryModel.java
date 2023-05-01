@@ -20,11 +20,11 @@ public class DictionaryModel extends RepresentationModel<DictionaryModel> implem
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private UUID dictionaryId;
-    @Column(nullable = false, length = 60)
+    @Column(nullable = false, length = 120)
     private String word;
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 150)
     private String link;
-    @Column(nullable = false, length = 500)
+    @Column(nullable = false, length = 750)
     private String reference;
     private int searchCount;
 

@@ -19,6 +19,6 @@ public class PostDto {
     private int likes;
     private boolean favorite = false;
     private String description;
-    private ImageModel image;
+    private String imgUrl;
     private List<String> tags;
 }

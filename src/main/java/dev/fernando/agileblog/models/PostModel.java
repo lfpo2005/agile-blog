@@ -49,9 +49,8 @@ public class PostModel extends RepresentationModel<PostModel>  implements Serial
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime dateUpdate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id")
-    private ImageModel image;
+    @Column(nullable = false)
+    private String imgUrl;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
