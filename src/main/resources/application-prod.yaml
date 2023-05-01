@@ -1,8 +1,8 @@
 server:
   port: 8080
   forward-headers-strategy: native
-#  servlet:
-#    context-path: '/blog'
+  servlet:
+    context-path: '/blog'
 
 spring:
   datasource:
