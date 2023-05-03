@@ -2,9 +2,7 @@ package dev.fernando.agileblog.models;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -15,6 +13,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
+import static java.util.Base64.getEncoder;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -40,7 +40,7 @@ public class PostModel extends RepresentationModel<PostModel>  implements Serial
 
     private boolean favorite = false;
 
-    @Column(nullable = false, length = 250)
+    @Column(nullable = false, length = 300)
     private String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
@@ -49,8 +49,8 @@ public class PostModel extends RepresentationModel<PostModel>  implements Serial
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime dateUpdate;
 
-    @Column(nullable = false)
-    private String imgUrl;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String img;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

@@ -4,6 +4,7 @@ server:
   servlet:
     context-path: '/blog'
 
+
 spring:
   datasource:
     url: jdbc:postgresql://spring_db:5432/agileblog
@@ -48,6 +49,8 @@ spring:
         auth: true
         ssl:
           enable: true
+  cache:
+    type: ehcache
 
 logging:
   level:

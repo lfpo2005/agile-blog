@@ -1,5 +1,15 @@
-version: "3.9"
+version: "3.3"
 services:
+
+  redis:
+    image: "redis:6.2"
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - lfpo-network
+    environment:
+      - REDIS_PASSWORD=197197
 
   spring_db:
     image: postgres:11
@@ -42,6 +52,7 @@ services:
     command: java -jar /agile-blog/app.jar
     depends_on:
       - spring_db
+      - redis
     networks:
       - lfpo-network
 

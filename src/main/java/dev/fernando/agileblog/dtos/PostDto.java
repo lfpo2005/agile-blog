@@ -1,6 +1,5 @@
 package dev.fernando.agileblog.dtos;
 
-import dev.fernando.agileblog.models.ImageModel;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -19,6 +18,6 @@ public class PostDto {
     private int likes;
     private boolean favorite = false;
     private String description;
-    private String imgUrl;
+    private String img;
     private List<String> tags;
 }

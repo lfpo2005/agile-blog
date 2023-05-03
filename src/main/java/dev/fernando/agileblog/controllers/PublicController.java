@@ -6,15 +6,13 @@ import dev.fernando.agileblog.specifications.SpecificationTemplate;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -34,17 +32,26 @@ public class PublicController {
     @Autowired
     PostService postService;
 
-    @GetMapping("posts")
-    public ResponseEntity<Page<PostModel>> getAllPosts(SpecificationTemplate.PostSpec spec,
-                                                       @PageableDefault(page = 0, size = 100,
-                                                               sort = "postId", direction = Sort.Direction.ASC) Pageable pageable) {
+    @GetMapping("/all-posts")
+    @Cacheable(value = "postsCache", key = "'allPosts'")
+    public Page<PostModel> getAllPosts(SpecificationTemplate.PostSpec spec,
+                                       @PageableDefault(page = 0, size = 100,
+                                               sort = "postId", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<PostModel> postModelPage = postService.findAll(spec, pageable);
         if (!postModelPage.isEmpty()) {
             for (PostModel post : postModelPage.toList()){
                 post.add(linkTo(methodOn(PublicController.class).getOnePost(post.getPostId())).withSelfRel());
             }
         }
-        return ResponseEntity.status(HttpStatus.OK).body(postModelPage);
+        return postModelPage;
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<Page<PostModel>> getAllPostsWrapper(SpecificationTemplate.PostSpec spec,
+                                                              Pageable pageable,
+                                                              @RequestParam(required = false) String search) {
+        Page<PostModel> posts = getAllPosts(spec, pageable);
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/posts/{postId}")
