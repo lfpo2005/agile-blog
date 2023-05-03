@@ -39,7 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/public/**",
             "/auth/**",
             "/newsletter/**",
-            "/dictionaries/**"
+            "/dictionaries/**",
+            "/search/**",
     };
 
     @Bean

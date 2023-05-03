@@ -12,11 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -94,4 +97,16 @@ public class PostContoller {
         log.info("Module updated successfully moduleId {} ", postModel.getPostId());
         return ResponseEntity.status(HttpStatus.OK).body(postModel);
     }
+/*    @GetMapping("/search")
+//    @PreAuthorize("permitAll()")
+    public ResponseEntity<Object> searchPosts(@RequestParam("searchTerm") String searchTerm, Model model) {
+        List<PostModel> postDtoList = postService.searchPosts(searchTerm);
+        List<PostModel> postModelList = new ArrayList<>();
+        for (PostModel postDto : postDtoList) {
+            PostModel postModel = new PostModel();
+            BeanUtils.copyProperties(postDto, postModel);
+            postModelList.add(postModel);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(postModelList);
+    }*/
 }

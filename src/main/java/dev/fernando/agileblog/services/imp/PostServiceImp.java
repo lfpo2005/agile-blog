@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,4 +40,13 @@ public class PostServiceImp implements PostService {
         return postRepository.findById(postId);
     }
 
+    @Override
+    public List<PostModel> searchPosts(String searchTerm) {
+        List<PostModel> postModels = postRepository.findByTitleOrTagsContainingIgnoreCase(searchTerm);
+        List<PostModel> postDtos = new ArrayList<>();
+        for (PostModel postModel : postModels) {
+            postDtos.add(postModel);
+        }
+        return postDtos;
+    }
 }

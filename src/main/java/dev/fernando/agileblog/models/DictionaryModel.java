@@ -22,9 +22,9 @@ public class DictionaryModel extends RepresentationModel<DictionaryModel> implem
     private UUID dictionaryId;
     @Column(nullable = false, length = 120)
     private String word;
-    @Column(nullable = false, length = 150)
+    @Column(nullable = false, length = 250)
     private String link;
-    @Column(nullable = false, length = 750)
+    @Column(nullable = false, length = 1000)
     private String reference;
     private int searchCount;
 
