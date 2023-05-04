@@ -6,8 +6,6 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
-    networks:
-      - lfpo-network
     environment:
       - REDIS_PASSWORD=197197
 
@@ -39,22 +37,40 @@ services:
       - lfpo-network
 
   agile-blog:
-    image: lfpo2005/agile-blog
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
-    build: .
-    working_dir: /agile-blog
     environment:
       SPRING.DATASOURCE.URL: jdbc:postgresql://spring_db:5432/agileblog
       SPRING.DATASOURCE.USERNAME: postgres
       SPRING.DATASOURCE.PASSWORD: postgres
     ports:
-      - 8080:8080
-    command: java -jar /agile-blog/app.jar
+      - 8090:8080
+    command: java -jar /app/app.jar
     depends_on:
       - spring_db
       - redis
     networks:
       - lfpo-network
+
+#  agile-blog:
+#    image: lfpo2005/agile-blog
+#    restart: always
+#    build: .
+#    working_dir: /agile-blog
+#    environment:
+#      SPRING.DATASOURCE.URL: jdbc:postgresql://spring_db:5432/agileblog
+#      SPRING.DATASOURCE.USERNAME: postgres
+#      SPRING.DATASOURCE.PASSWORD: postgres
+#    ports:
+#      - 8080:8080
+#    command: java -jar /agile-blog/app.jar
+#    depends_on:
+#      - spring_db
+#      - redis
+#    networks:
+#      - lfpo-network
 
 networks:
   lfpo-network:

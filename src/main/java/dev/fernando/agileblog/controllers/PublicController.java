@@ -32,26 +32,17 @@ public class PublicController {
     @Autowired
     PostService postService;
 
-    @GetMapping("/all-posts")
-    @Cacheable(value = "postsCache", key = "'allPosts'")
-    public Page<PostModel> getAllPosts(SpecificationTemplate.PostSpec spec,
-                                       @PageableDefault(page = 0, size = 100,
-                                               sort = "postId", direction = Sort.Direction.ASC) Pageable pageable) {
+    @GetMapping("posts")
+    public ResponseEntity<Page<PostModel>> getAllPosts(SpecificationTemplate.PostSpec spec,
+                                                       @PageableDefault(page = 0, size = 100,
+                                                               sort = "postId", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<PostModel> postModelPage = postService.findAll(spec, pageable);
         if (!postModelPage.isEmpty()) {
             for (PostModel post : postModelPage.toList()){
                 post.add(linkTo(methodOn(PublicController.class).getOnePost(post.getPostId())).withSelfRel());
             }
         }
-        return postModelPage;
-    }
-
-    @GetMapping("/posts")
-    public ResponseEntity<Page<PostModel>> getAllPostsWrapper(SpecificationTemplate.PostSpec spec,
-                                                              Pageable pageable,
-                                                              @RequestParam(required = false) String search) {
-        Page<PostModel> posts = getAllPosts(spec, pageable);
-        return ResponseEntity.ok(posts);
+        return ResponseEntity.status(HttpStatus.OK).body(postModelPage);
     }
 
     @GetMapping("/posts/{postId}")

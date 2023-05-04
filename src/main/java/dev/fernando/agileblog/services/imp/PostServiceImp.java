@@ -42,7 +42,7 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<PostModel> searchPosts(String searchTerm) {
-        List<PostModel> postModels = postRepository.findByTitleOrTagsContainingIgnoreCase(searchTerm);
+        List<PostModel> postModels = postRepository.findByTagsContainingIgnoreCase(searchTerm);
         List<PostModel> postDtos = new ArrayList<>();
         for (PostModel postModel : postModels) {
             postDtos.add(postModel);

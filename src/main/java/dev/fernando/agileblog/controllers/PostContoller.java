@@ -23,6 +23,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
@@ -33,7 +34,6 @@ public class PostContoller {
     @Autowired
     PostService postService;
 
-    @CacheEvict(value = "postsCache", key = "'allPosts'")
     @PostMapping(value = "/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> savePost(@RequestParam("title") String title, @RequestParam("post") String postText, @RequestParam("description") String description, @RequestParam("tags") List<String> tags, @RequestParam("img") MultipartFile file, Authentication authentication) {
         try {
@@ -48,7 +48,10 @@ public class PostContoller {
             postModel.setTitle(title);
             postModel.setPost(postText);
             postModel.setDescription(description);
-            postModel.setTags(tags);
+
+            List<String> upperCaseTags = tags.stream().map(String::toUpperCase).collect(Collectors.toList());
+
+            postModel.setTags(upperCaseTags);
             postModel.setAuthor(fullName);
             postModel.setImg(imgBase64);
             postModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
@@ -64,6 +67,7 @@ public class PostContoller {
             return ResponseEntity.badRequest().build();
         }
     }
+
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/posts/{postId}")
