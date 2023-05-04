@@ -6,6 +6,7 @@ import dev.fernando.agileblog.specifications.SpecificationTemplate;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,11 +28,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/public")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@CacheConfig(cacheNames = "postAllCache")
 public class PublicController {
 
     @Autowired
     PostService postService;
 
+    @Cacheable(value = "postAllCache", key = "#pageable.pageNumber")
     @GetMapping("posts")
     public ResponseEntity<Page<PostModel>> getAllPosts(SpecificationTemplate.PostSpec spec,
                                                        @PageableDefault(page = 0, size = 100,
