@@ -51,12 +51,8 @@ spring:
   cache:
     type: caffeine
     caffeine:
-      spec: maximumSize=500,expireAfterWrite=10m
-  redis:
-    host: redis
-    port: 6379
-    password: 197197
-
+      specs:
+        postAllCache: maximumSize=500,expireAfterWrite=120m
 
 logging:
   level:

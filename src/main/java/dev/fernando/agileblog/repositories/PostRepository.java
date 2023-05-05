@@ -11,7 +11,9 @@ import java.util.UUID;
 
 public interface PostRepository extends JpaRepository<PostModel, UUID>, JpaSpecificationExecutor<PostModel> {
 
-    @Query("SELECT p FROM PostModel p LEFT JOIN p.tags tag WHERE CONCAT(LOWER(p.title) , ' ', LOWER(tag)) LIKE %:searchTerm%\n")
-    List<PostModel> findByTitleOrTagsContainingIgnoreCase(@Param("searchTerm") String searchTerm);
+    @Query("SELECT DISTINCT p FROM PostModel p LEFT JOIN p.tags tag WHERE UPPER(tag) LIKE UPPER(:searchTerm)")
+    List<PostModel> findByTagsContainingIgnoreCase(@Param("searchTerm") String searchTerm);
+
+
 
 }
