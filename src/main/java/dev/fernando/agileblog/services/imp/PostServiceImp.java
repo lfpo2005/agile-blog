@@ -1,7 +1,10 @@
 package dev.fernando.agileblog.services.imp;
 
+import dev.fernando.agileblog.models.EmailModel;
 import dev.fernando.agileblog.models.PostModel;
+import dev.fernando.agileblog.repositories.EmailRepository;
 import dev.fernando.agileblog.repositories.PostRepository;
+import dev.fernando.agileblog.services.EmailService;
 import dev.fernando.agileblog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +22,11 @@ public class PostServiceImp implements PostService {
 
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    EmailRepository emailRepository;
+    @Autowired
+    EmailService emailService;
+
 
     @Override
     public PostModel save(PostModel postModel) {
@@ -48,5 +56,21 @@ public class PostServiceImp implements PostService {
             postDtos.add(postModel);
         }
         return postDtos;
+    }
+
+    @Override
+    public void sendNewPostNotification(PostModel postModel) {
+        List<EmailModel> emails = emailRepository.findUsersWithActiveNewsletter();
+
+        for (EmailModel email : emails) {
+            EmailModel emailModel = new EmailModel();
+            emailModel.setEmailFrom("Blog Agil" + " <contato@metodologia-agil.com.br>");
+            emailModel.setEmailTo(email.getEmailTo());
+            emailModel.setSubject("Novo post no blog falando sobre: " + postModel.getTitle());
+            emailModel.setName(email.getName());
+            emailModel.setText("Olá " + email.getName() + ", adicionamos um novo post com o tema '" + postModel.getTitle() + "'. Clique aqui para conferir: " + "https://metodologia-agil.com.br/post/" + postModel.getPostId());
+            emailModel.setActiveNewsletter(true);
+            emailService.sendEmail(emailModel);
+        }
     }
 }

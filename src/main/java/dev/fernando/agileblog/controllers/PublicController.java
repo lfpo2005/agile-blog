@@ -4,6 +4,7 @@ import dev.fernando.agileblog.models.PostModel;
 import dev.fernando.agileblog.services.PostService;
 import dev.fernando.agileblog.specifications.SpecificationTemplate;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -35,10 +36,20 @@ public class PublicController {
     PostService postService;
 
     @Cacheable(value = "postAllCache", key = "#pageable.pageNumber")
-    @GetMapping("posts")
+    @GetMapping("posts/all")
     public ResponseEntity<Page<PostModel>> getAllPosts(SpecificationTemplate.PostSpec spec,
                                                        @PageableDefault(page = 0, size = 100,
                                                                sort = "postId", direction = Sort.Direction.ASC) Pageable pageable) {
+        return getPageResponseEntity(spec, pageable);
+    }
+    @GetMapping("posts")
+    public ResponseEntity<Page<PostModel>> getPostsByTitle(SpecificationTemplate.PostSpec spec,
+                                                           @PageableDefault(page = 0, size = 100, sort = "postId", direction = Sort.Direction.ASC) Pageable pageable) {
+        return getPageResponseEntity(spec, pageable);
+    }
+
+    @NotNull
+    private ResponseEntity<Page<PostModel>> getPageResponseEntity(SpecificationTemplate.PostSpec spec, @PageableDefault(page = 0, size = 100, sort = "postId", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<PostModel> postModelPage = postService.findAll(spec, pageable);
         if (!postModelPage.isEmpty()) {
             for (PostModel post : postModelPage.toList()){

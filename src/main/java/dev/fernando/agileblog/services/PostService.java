@@ -15,4 +15,6 @@ public interface PostService {
     Page<PostModel> findAll(Specification<PostModel> spec, Pageable pageable);
     Optional<PostModel> findById(UUID postId);
     List<PostModel> searchPosts(String searchTerm);
+
+    void sendNewPostNotification(PostModel postModel);
 }

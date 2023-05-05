@@ -21,9 +21,9 @@ public class QuestionModel implements Serializable {
     private String optionA;
     @Column(nullable = false, length = 550)
     private String optionB;
-    @Column(nullable = false, length = 550)
+    @Column(length = 550)
     private String optionC;
-    @Column(nullable = false, length = 550)
+    @Column(length = 550)
     private String optionD;
     @Column(nullable = false, length = 15)
     private String answer;

@@ -12,4 +12,6 @@ public interface EmailRepository extends JpaRepository<EmailModel, UUID> {
 
     @Query("SELECT e FROM EmailModel e WHERE e.activeNewsletter = true")
     List<EmailModel> findUsersWithActiveNewsletter();
+
+
 }

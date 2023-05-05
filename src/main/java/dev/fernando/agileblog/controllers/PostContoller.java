@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -57,6 +58,10 @@ public class PostContoller {
             postModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
             postModel.setDateUpdate(LocalDateTime.now(ZoneId.of("UTC")));
             postService.save(postModel);
+
+            if (HttpStatus.OK.value() == HttpServletResponse.SC_OK) {
+                postService.sendNewPostNotification(postModel);
+            }
 
             log.debug("POST savePost postId saved: ------> {}", postModel.getPostId());
             log.info("Post saved successfully postId: ------> {}", postModel.getPostId());
