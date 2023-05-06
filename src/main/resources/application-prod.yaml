@@ -50,12 +50,16 @@ spring:
         ssl:
           enable: true
   cache:
-    type: ehcache
+    type: caffeine
+    caffeine:
+      specs:
+        postAllCache: maximumSize=500,expireAfterWrite=120m
 
 logging:
   level:
     com.ead: TRACE
     root: INFO
+    org.springframework.cache: DEBUG
     org.springframework.web: DEBUG
     org.hibernate: INFO
 
