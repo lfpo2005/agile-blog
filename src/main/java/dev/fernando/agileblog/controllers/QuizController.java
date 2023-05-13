@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -57,7 +58,6 @@ public class QuizController {
         return new ResponseEntity<>(selectedQuestions, HttpStatus.OK);
     }
 
-
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/submit")
     public ResponseEntity<?> submitQuiz(Principal principal, @RequestBody List<AnswerSubmission> answerSubmissions) {
@@ -92,10 +92,10 @@ public class QuizController {
         quizResult.setEndTime(LocalDateTime.now());
         quizResultRepository.save(quizResult);
 
-        if (correctAnswers * 100 / answerSubmissions.size() < 80) {
+        if (correctAnswers * 100 / answerSubmissions.size() < 85) {
             return new ResponseEntity<>(incorrectQuestions, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
         }
     }
 }
