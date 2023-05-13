@@ -4,7 +4,6 @@ server:
   servlet:
     context-path: '/blog'
 
-
 spring:
   datasource:
     url: jdbc:postgresql://spring_db:5432/agileblog
@@ -37,7 +36,7 @@ spring:
       enabled: Always
   mail:
     host: smtplw.com.br
-    port: 587
+    port: 465
     username: contato@metodologia-agil.com.br
     password: 'paRGQbTw6874'
     protocol: smtp
@@ -60,7 +59,6 @@ spring:
       add-mappings: false
 
 
-
 logging:
   level:
     com.ead: TRACE
@@ -72,4 +70,4 @@ logging:
 ead:
   auth:
     jwtSecret: t7w!z%C*F-JaNdRgUkXp2s5v8x/A?D(G+KbPeShVmYq3t6w9z$B&E)H@McQfTjWn
-    jwtExpirationMs: 14400000
+    jwtExpirationMs: 7200000

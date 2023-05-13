@@ -36,7 +36,12 @@ public class PostContoller {
     PostService postService;
 
     @PostMapping(value = "/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> savePost(@RequestParam("title") String title, @RequestParam("post") String postText, @RequestParam("description") String description, @RequestParam("tags") List<String> tags, @RequestParam("img") MultipartFile file, Authentication authentication) {
+    public ResponseEntity<Object> savePost(@RequestParam("title") String title,
+                                           @RequestParam("post") String postText,
+                                           @RequestParam("description") String description,
+                                           @RequestParam("tags") List<String> tags,
+                                           @RequestParam("img") MultipartFile file,
+                                           Authentication authentication) {
         try {
             log.debug("POST savePost");
 
@@ -91,7 +96,8 @@ public class PostContoller {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/posts/{postId}")
-    public ResponseEntity<Object> updatePost(@PathVariable(value = "postId") UUID postId, @RequestBody @Valid PostDto postDto) {
+    public ResponseEntity<Object> updatePost(@PathVariable(value = "postId") UUID postId,
+                                             @RequestBody @Valid PostDto postDto) {
 
         log.debug("PUT updateModule moduleDto received {} ", postDto.toString());
         Optional<PostModel> postModelOptional = postService.findById(postId);
