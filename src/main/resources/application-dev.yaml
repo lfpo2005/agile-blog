@@ -52,22 +52,21 @@ spring:
     type: caffeine
     caffeine:
       specs:
-        postAllCache: maximumSize=500,expireAfterWrite=120m
+        postAllCache: maximumSize=500,expireAfterWrite=10m
   mvc:
     throw-exception-if-no-handler-found: true
     resources:
       add-mappings: false
 
-
 logging:
   level:
-    com.ead: TRACE
+    com.blog: TRACE
     root: INFO
     org.springframework.cache: DEBUG
     org.springframework.web: DEBUG
-    org.hibernate: FULL
+    org.hibernate: INFO
 
-ead:
+blog:
   auth:
     jwtSecret: t7w!z%C*F-JaNdRgUkXp2s5v8x/A?D(G+KbPeShVmYq3t6w9z$B&E)H@McQfTjWn
     jwtExpirationMs: 14400000

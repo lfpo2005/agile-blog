@@ -1,8 +1,3 @@
-#FROM openjdk:11-jdk-slim
-#ARG JAR_FILE=target/*.jar
-#COPY ${JAR_FILE} app.jar
-#ENTRYPOINT ["java","-jar","/app.jar"]
-
 FROM maven:3.6.3-jdk-11-slim AS build
 WORKDIR /app
 COPY pom.xml .
