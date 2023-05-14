@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 @Component
 public class JwtProvider {
 
-    @Value("${ead.auth.jwtSecret}")
+    @Value("${blog.auth.jwtSecret}")
     private String jwtSecret;
-    @Value("${ead.auth.jwtExpirationMs}")
+    @Value("${blog.auth.jwtExpirationMs}")
     private int jwtExpirationMs;
 
     public String generateJwt(Authentication authentication) {

@@ -1,14 +1,13 @@
 server:
-  port: 8080
+  port: ${SPRING_SERVER_PORT}
   forward-headers-strategy: native
   servlet:
     context-path: '/blog'
-
 spring:
   datasource:
-    url: jdbc:postgresql://spring_db:5432/agileblog
-    username: postgres
-    password: postgres
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   type: com.zaxxer.hikari.HikariDataSource
   hikari:
     connection-timeout: 20000
@@ -35,10 +34,10 @@ spring:
     ansi:
       enabled: Always
   mail:
-    host: smtplw.com.br
-    port: 465
-    username: contato@metodologia-agil.com.br
-    password: 'paRGQbTw6874'
+    host: ${SPRING_MAIL_HOST}
+    port: ${SPRING_MAIL_PORT}
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
     protocol: smtp
     sender:
       name: Blog agil
@@ -57,17 +56,14 @@ spring:
     throw-exception-if-no-handler-found: true
     resources:
       add-mappings: false
-
-
 logging:
   level:
-    com.ead: TRACE
+    com.blog: TRACE
     root: INFO
     org.springframework.cache: DEBUG
     org.springframework.web: DEBUG
     org.hibernate: INFO
-
-ead:
+blog:
   auth:
-    jwtSecret: t7w!z%C*F-JaNdRgUkXp2s5v8x/A?D(G+KbPeShVmYq3t6w9z$B&E)H@McQfTjWn
-    jwtExpirationMs: 7200000
+    jwtSecret: ${SPRING_AUTH_JWTSECRET}
+    jwtExpirationMs: ${SPRING_AUTH_JWTEXPIRATIONMS}
