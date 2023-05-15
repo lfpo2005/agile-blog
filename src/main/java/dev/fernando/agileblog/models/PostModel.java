@@ -56,4 +56,7 @@ public class PostModel extends RepresentationModel<PostModel>  implements Serial
     @Fetch(FetchMode.SUBSELECT)
     private List<String> tags;
 
+    @Column(nullable = false)
+    private int views = 0;
+
 }

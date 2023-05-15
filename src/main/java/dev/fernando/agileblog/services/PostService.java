@@ -17,4 +17,6 @@ public interface PostService {
     List<PostModel> searchPosts(String searchTerm);
 
     void sendNewPostNotification(PostModel postModel);
+
+    void incrementViews(UUID postId);
 }

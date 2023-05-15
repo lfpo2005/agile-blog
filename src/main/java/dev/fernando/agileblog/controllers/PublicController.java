@@ -64,8 +64,9 @@ public class PublicController {
 
         Optional<PostModel> postModelOptional = postService.findById(postId);
         if(!postModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found for this category.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found.");
         }
+        postService.incrementViews(postId);
         return ResponseEntity.status(HttpStatus.OK).body(postModelOptional.get());
     }
 

@@ -24,12 +24,5 @@ jobs:
         context: .
         push: true
         tags: |
-          lfpo2005/agile-blog:v1
+          lfpo2005/agile-blog:1.0.0
           lfpo2005/agile-blog:latest
-
-
-
-    
-
-    
-    

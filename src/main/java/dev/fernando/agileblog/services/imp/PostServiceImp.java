@@ -49,6 +49,15 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
+    public void incrementViews(UUID postId) {
+        Optional<PostModel> postModelOptional = postRepository.findById(postId);
+        if (postModelOptional.isPresent()) {
+            PostModel post = postModelOptional.get();
+            post.setViews(post.getViews() + 1);
+            postRepository.save(post);
+        }
+    }
+    @Override
     public List<PostModel> searchPosts(String searchTerm) {
         List<PostModel> postModels = postRepository.findByTagsContainingIgnoreCase(searchTerm);
         List<PostModel> postDtos = new ArrayList<>();

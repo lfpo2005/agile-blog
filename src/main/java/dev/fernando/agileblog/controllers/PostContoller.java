@@ -7,6 +7,8 @@ import dev.fernando.agileblog.services.PostService;
 import dev.fernando.agileblog.util.ConvertImage;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,11 +31,13 @@ import java.util.stream.Collectors;
 @Log4j2
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-//@RequestMapping("api/v1")
 public class PostContoller {
 
     @Autowired
     PostService postService;
+    @Autowired
+    private CacheManager cacheManager;
+
 
     @PostMapping(value = "/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> savePost(@RequestParam("title") String title,
@@ -45,7 +49,7 @@ public class PostContoller {
         try {
             log.debug("POST savePost");
 
-            String imgBase64 = ConvertImage.convertImage(file, 1300, 300);
+            String imgBase64 = ConvertImage.convertImage(file, 1200, 251);
 
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             String fullName = userDetails.getFullName();
@@ -89,10 +93,17 @@ public class PostContoller {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found for this Category.");
         }
         postService.delete(postModelOptional.get());
+
+        Cache postCache = cacheManager.getCache("postAllCache");
+        if (postCache != null) {
+            postCache.evict(postId);
+        }
+
         log.debug("DELETE deleteModule postId deleted {} ", postId);
         log.info("Module deleted successfully postId {} ", postId);
         return ResponseEntity.status(HttpStatus.OK).body("Post deleted successfully.");
     }
+
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/posts/{postId}")
