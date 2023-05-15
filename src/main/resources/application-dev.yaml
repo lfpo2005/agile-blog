@@ -48,11 +48,11 @@ spring:
         auth: true
         ssl:
           enable: true
-  cache:
-    type: caffeine
-    caffeine:
-      specs:
-        postAllCache: maximumSize=500,expireAfterWrite=10m
+#  cache:
+#    type: caffeine
+#    caffeine:
+#      specs:
+#        postAllCache: maximumSize=500,expireAfterWrite=10m
   mvc:
     throw-exception-if-no-handler-found: true
     resources:
