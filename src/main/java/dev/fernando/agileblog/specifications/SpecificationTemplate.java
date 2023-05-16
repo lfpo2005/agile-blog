@@ -26,7 +26,7 @@ public class SpecificationTemplate {
     public interface PostSpec extends Specification<PostModel> {}
 
     @And({
-            @Spec(path = "word", spec = ContainsIgnoreCase.class)
+            @Spec(path = "word", spec = LikeIgnoreCase.class)
     })
     public interface DictionarySpec extends Specification<DictionaryModel> {}
 
