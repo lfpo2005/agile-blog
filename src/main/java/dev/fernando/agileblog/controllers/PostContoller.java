@@ -49,7 +49,7 @@ public class PostContoller {
         try {
             log.debug("POST savePost");
 
-            String imgBase64 = ConvertImage.convertImage(file, 1584, 396);
+            String imgBase64 = ConvertImage.convertImage(file, 1200, 250);
 
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             String fullName = userDetails.getFullName();

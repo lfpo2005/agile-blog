@@ -72,6 +72,10 @@ public class PostServiceImp implements PostService {
         List<EmailModel> emails = emailRepository.findUsersWithActiveNewsletter();
 
         for (EmailModel email : emails) {
+
+            if (emailRepository.existsByEmailTo(email.getEmailTo())) {
+                continue;
+            }
             EmailModel emailModel = new EmailModel();
             emailModel.setEmailFrom("Blog Agil" + " <contato@metodologia-agil.com.br>");
             emailModel.setEmailTo(email.getEmailTo());
