@@ -10,11 +10,6 @@ import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Root;
-import java.util.Collection;
-import java.util.UUID;
-
 public class SpecificationTemplate {
 
     @And({
@@ -25,14 +20,14 @@ public class SpecificationTemplate {
     })
     public interface UserSpec extends Specification<UserModel> {}
 
-
     @And({
             @Spec(path = "title", spec = LikeIgnoreCase.class)
     })
     public interface PostSpec extends Specification<PostModel> {}
 
     @And({
-            @Spec(path = "word", spec = LikeIgnoreCase.class)
+            @Spec(path = "word", spec = ContainsIgnoreCase.class)
     })
     public interface DictionarySpec extends Specification<DictionaryModel> {}
-}
+
+   }
