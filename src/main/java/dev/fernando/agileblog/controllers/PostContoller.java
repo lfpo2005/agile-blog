@@ -43,7 +43,7 @@ public class PostContoller {
             log.debug("POST savePost");
 
             MultipartFile coverImage = postDto.getImgCover();
-            byte[] coverImageBytes = ConvertImage.convertImage(coverImage, 1200, 250);
+            String coverImageBytes = ConvertImage.convertImage(coverImage, 1200, 250);
 
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             String fullName = userDetails.getFullName();

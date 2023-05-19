@@ -9,6 +9,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.UUID;
 
 public class ConvertImage {
@@ -35,7 +37,7 @@ public class ConvertImage {
         return imagePath;
     }
 
-    public static byte[] convertImage(MultipartFile file, int width, int height) throws IOException {
+    public static String convertImage(MultipartFile file, int width, int height) throws IOException {
         byte[] imageBytes = file.getBytes();
         ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
         BufferedImage bImage = ImageIO.read(bis);
@@ -53,7 +55,7 @@ public class ConvertImage {
         ImageIO.write(bImage, "jpg", baos);
         byte[] imageData = baos.toByteArray();
 
-        return imageData;
+        return Base64.getEncoder().encodeToString(imageData);
     }
 }
 

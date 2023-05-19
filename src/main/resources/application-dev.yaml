@@ -58,6 +58,7 @@ spring:
     resources:
       add-mappings: false
 
+
 logging:
   level:
     com.blog: TRACE

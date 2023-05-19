@@ -51,7 +51,7 @@ public class PostModel extends RepresentationModel<PostModel>  implements Serial
     private LocalDateTime dateUpdate;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private byte[] imgCover;
+    private String imgCover;
 
     @Column(length = 100)
     private String alt;
