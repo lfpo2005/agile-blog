@@ -43,6 +43,7 @@ public class PostModel extends RepresentationModel<PostModel>  implements Serial
     @Column(nullable = false, length = 300)
     private String description;
 
+    @Column(nullable = false, updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime creationDate;
 
@@ -50,7 +51,10 @@ public class PostModel extends RepresentationModel<PostModel>  implements Serial
     private LocalDateTime dateUpdate;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String img;
+    private byte[] imgCover;
+
+    @Column(length = 100)
+    private String alt;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

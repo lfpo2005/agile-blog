@@ -6,10 +6,10 @@ import dev.fernando.agileblog.models.PostModel;
 import dev.fernando.agileblog.services.PostService;
 import dev.fernando.agileblog.util.ConvertImage;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +23,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
@@ -40,32 +38,23 @@ public class PostContoller {
 
 
     @PostMapping(value = "/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> savePost(@RequestParam("title") String title,
-                                           @RequestParam("post") String postText,
-                                           @RequestParam("description") String description,
-                                           @RequestParam("tags") List<String> tags,
-                                           @RequestParam("img") MultipartFile file,
-                                           Authentication authentication) {
+    public ResponseEntity<Object> savePost(@ModelAttribute PostDto postDto, Authentication authentication) {
         try {
             log.debug("POST savePost");
 
-            String imgBase64 = ConvertImage.convertImage(file, 1200, 250);
+            MultipartFile coverImage = postDto.getImgCover();
+            byte[] coverImageBytes = ConvertImage.convertImage(coverImage, 1200, 250);
 
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             String fullName = userDetails.getFullName();
 
             PostModel postModel = new PostModel();
-            postModel.setTitle(title);
-            postModel.setPost(postText);
-            postModel.setDescription(description);
-
-            List<String> upperCaseTags = tags.stream().map(String::toUpperCase).collect(Collectors.toList());
-
-            postModel.setTags(upperCaseTags);
+            BeanUtils.copyProperties(postDto, postModel);
             postModel.setAuthor(fullName);
-            postModel.setImg(imgBase64);
+            postModel.setImgCover(coverImageBytes);
             postModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
             postModel.setDateUpdate(LocalDateTime.now(ZoneId.of("UTC")));
+
             postService.save(postModel);
 
             if (HttpStatus.OK.value() == HttpServletResponse.SC_OK) {
@@ -103,7 +92,6 @@ public class PostContoller {
         log.info("Module deleted successfully postId {} ", postId);
         return ResponseEntity.status(HttpStatus.OK).body("Post deleted successfully.");
     }
-
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/posts/{postId}")
