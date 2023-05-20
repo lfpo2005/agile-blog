@@ -1,6 +1,7 @@
 package dev.fernando.agileblog.dtos;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +19,7 @@ public class PostDto {
     private int likes;
     private boolean favorite = false;
     private String description;
-    private String img;
+    private MultipartFile imgCover;
+    private String alt;
     private List<String> tags;
 }
