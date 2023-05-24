@@ -43,14 +43,13 @@ spring:
     username: ${SPRING_MAIL_USERNAME}
     password: ${SPRING_MAIL_PASSWORD}
     protocol: smtp
-    sender:
-      name: Blog agil
-      email: contato@metodologia-agil.com.br
     properties:
-      smtp:
-        auth: true
-        ssl:
-          enable: true
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: ${SPRING_MAIL_TRUST}
   cache:
     type: caffeine
     caffeine:
