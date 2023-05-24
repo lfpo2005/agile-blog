@@ -9,5 +9,4 @@ public interface EmailService {
 
     EmailModel sendEmail(EmailModel emailModel);
 
-    List<EmailModel> receiveEmail();
-}
+  }

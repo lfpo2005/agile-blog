@@ -77,7 +77,7 @@ public class PostServiceImp implements PostService {
                 continue;
             }
             EmailModel emailModel = new EmailModel();
-            emailModel.setEmailFrom("Blog Agil" + " <contato@metodologia-agil.com.br>");
+            emailModel.setEmailFrom("Blog Agil" + " <metodologia-agil@devluisoliveira.com.br>");
             emailModel.setEmailTo(email.getEmailTo());
             emailModel.setSubject("Novo post no blog falando sobre: " + postModel.getTitle());
             emailModel.setName(email.getName());

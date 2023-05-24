@@ -35,19 +35,18 @@ spring:
     ansi:
       enabled: Always
   mail:
-    host: smtplw.com.br
-    port: 587
-    username: contato@metodologia-agil.com.br
-    password: 'paRGQbTw6874'
+    host: mocha6007.mochahost.com
+    port: 465
+    username: metodologia-agil@devluisoliveira.com.br
+    password: '@Clf197197'
     protocol: smtp
-    sender:
-      name: Blog agil
-      email: contato@metodologia-agil.com.br
     properties:
-      smtp:
-        auth: true
-        ssl:
-          enable: true
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: mocha6007.mochahost.com
   cache:
     type: caffeine
     caffeine:

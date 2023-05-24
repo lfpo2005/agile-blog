@@ -23,22 +23,16 @@ public class EmailController {
     @Autowired
     EmailService emailService;
 
-//    @Cacheable(value = "newsletterCache", key = "#emailModel.getEmailTo()")
+    //    @Cacheable(value = "newsletterCache", key = "#emailModel.getEmailTo()")
     @PostMapping("/newsletter")
     public ResponseEntity<EmailModel> sendingEmail(@RequestBody @Valid EmailDto emailDto) {
         EmailModel emailModel = new EmailModel();
         BeanUtils.copyProperties(emailDto, emailModel);
-        emailModel.setEmailFrom("Blog Agil" + " <contato@metodologia-agil.com.br>");
+        emailModel.setEmailFrom("Blog Agil" + " <metodologia-agil@devluisoliveira.com.br>");
         emailModel.setEmailTo(emailDto.getEmailTo());
         emailModel.setSubject("Confirmação de Inscrição na Newsletter");
         emailModel.setText("Olá " + emailDto.getName() + ", obrigado por se inscrever na nossa newsletter!");
         emailService.sendEmail(emailModel);
         return new ResponseEntity<>(emailModel, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/receive")
-    public ResponseEntity<List<EmailModel>> receiveEmail() {
-        List<EmailModel> receivedEmails = emailService.receiveEmail();
-        return new ResponseEntity<>(receivedEmails, HttpStatus.OK);
     }
 }
