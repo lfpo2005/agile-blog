@@ -16,8 +16,13 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
+import javax.mail.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -66,6 +71,54 @@ public class EmailServiceImpl implements EmailService {
         } finally {
             return emailRepository.save(emailModel);
         }
+    }
+
+  //  @Transactional
+    @Override
+    public List<EmailModel> receiveEmail() {
+        List<EmailModel> receivedEmails = new ArrayList<>();
+
+
+        Properties properties = new Properties();
+        properties.put("mail.store.protocol", "imaps");
+        properties.put("mail.imaps.host", "email-ssl.com.br");
+        properties.put("mail.imaps.port", "993");
+        properties.put("mail.imaps.ssl.enable", "true");
+        properties.put("mail.imaps.auth", "true");
+
+        Session emailSession = Session.getDefaultInstance(properties);
+        Store store;
+
+        try {
+            store = emailSession.getStore();
+            store.connect("admin@metodologia-agil.com.br", "paRGQbTw6874");
+
+            Folder emailFolder = store.getFolder("INBOX");
+            emailFolder.open(Folder.READ_ONLY);
+
+            Message[] messages = emailFolder.getMessages();
+            for (int i = 0; i < messages.length; i++) {
+                Message message = messages[i];
+
+                EmailModel emailModel = new EmailModel();
+                emailModel.setSubject(message.getSubject());
+                emailModel.setText(message.getContent().toString());
+                emailModel.setEmailFrom(message.getFrom()[0].toString());
+
+                receivedEmails.add(emailModel);
+            }
+
+            emailFolder.close(false);
+            store.close();
+
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return receivedEmails;
     }
 
 /*

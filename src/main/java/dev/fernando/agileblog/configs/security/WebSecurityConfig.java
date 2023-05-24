@@ -39,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/public/**",
             "/auth/**",
             "/newsletter/**",
+            "/receive/**",
             "/dictionaries/**",
             "/img/**",
             "/search/**",

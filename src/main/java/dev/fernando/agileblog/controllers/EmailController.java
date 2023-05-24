@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @Log4j2
@@ -33,5 +34,11 @@ public class EmailController {
         emailModel.setText("Olá " + emailDto.getName() + ", obrigado por se inscrever na nossa newsletter!");
         emailService.sendEmail(emailModel);
         return new ResponseEntity<>(emailModel, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/receive")
+    public ResponseEntity<List<EmailModel>> receiveEmail() {
+        List<EmailModel> receivedEmails = emailService.receiveEmail();
+        return new ResponseEntity<>(receivedEmails, HttpStatus.OK);
     }
 }
