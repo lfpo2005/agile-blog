@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     AuthenticationEntryPointImpl authenticationEntryPoint;
 
     public static final String[] AUTH_WHITELIST = {
+            "/quiz/start/**", //remover apos o google
             "/public/**",
             "/auth/**",
             "/newsletter/**",

@@ -14,7 +14,7 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "TB_DICTIONARY")
-public class DictionaryModel extends RepresentationModel<DictionaryModel> implements Serializable {
+public class DictionaryModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

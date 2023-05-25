@@ -16,7 +16,6 @@ public class DictionaryDto {
     private String link;
     private String reference;
     private int searchCount;
-
     public DictionaryDto(DictionaryModel dictionaryModel) {
     }
 }

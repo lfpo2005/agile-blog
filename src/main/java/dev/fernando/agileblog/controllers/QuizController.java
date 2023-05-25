@@ -36,8 +36,10 @@ public class QuizController {
     @Autowired
     QuizService quizService;
 
-    @GetMapping("/start")
-    @PreAuthorize("hasRole('USER')")
+/*    @GetMapping("/start")
+*//*
+    @PreAuthorize("hasRole('USER')") // pausa login
+*//*
     public ResponseEntity<List<QuestionModel>> startQuiz(@RequestParam(value = "incorrectQuestionIds",
             required = false) List<String> incorrectQuestionIds, Principal principal) {
         UserModel user = userRepository.findByUsername(principal.getName()).orElse(null);
@@ -56,6 +58,13 @@ public class QuizController {
         List<QuestionModel> selectedQuestions = quizService.addIncorrectQuestionsFromPreviousAttempt(allQuestions, incorrectQuestionUUIDs, 80);
 
         return new ResponseEntity<>(selectedQuestions, HttpStatus.OK);
+    }*/
+
+    @GetMapping("/start")
+    public ResponseEntity<List<QuestionModel>> startQuiz() {
+        List<QuestionModel> allQuestions = quizService.getAllQuestions();
+        // Sem a lógica de questões incorretas, todos as questões são selecionadas
+        return new ResponseEntity<>(allQuestions, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('USER')")

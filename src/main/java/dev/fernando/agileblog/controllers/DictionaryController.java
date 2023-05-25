@@ -39,11 +39,6 @@ public class DictionaryController {
                                                                     @PageableDefault(page = 0, size = 10, sort = "dictionaryId",
                                                                           direction = Sort.Direction.ASC) Pageable pageable) {
         Page<DictionaryModel> dictionaryModelPage = dictionaryService.findAll(spec, pageable);
-        if (!dictionaryModelPage.isEmpty()){
-            for (DictionaryModel dictionary : dictionaryModelPage.toList()) {
-                dictionary.add(linkTo(methodOn(DictionaryController.class).getOneDictionary(dictionary.getDictionaryId())).withSelfRel());
-            }
-        }
         return ResponseEntity.status(HttpStatus.OK).body(dictionaryModelPage);
     }
 
