@@ -38,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String[] AUTH_WHITELIST = {
             "/quiz/start/**", //remover apos o google
             "/public/**",
+            "/contact/**",
             "/auth/**",
             "/newsletter/**",
             "/receive/**",
@@ -65,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         List<String> allowedOrigins = Arrays.asList("https://metodologia-agil.com.br", "http://localhost:4200", "https://devluisoliveira.com.br");
         configuration.setAllowedOrigins(allowedOrigins);
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
 

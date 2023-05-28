@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class PostServiceImp implements PostService {
+public class PostServiceImpl implements PostService {
 
     @Autowired
     PostRepository postRepository;
