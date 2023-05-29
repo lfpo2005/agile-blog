@@ -74,8 +74,30 @@ public class PostContoller {
             return ResponseEntity.badRequest().build();
         }
     }
+    @CacheEvict(value = "postAllCache", allEntries = true)
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PutMapping(value = "/posts/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> updatePost(@PathVariable(value = "postId") UUID postId,
+                                             @ModelAttribute @Valid PostDto postDto) {
 
-    @CacheEvict(value = "postAllCache", key = "#postId")
+        log.debug("PUT updateModule moduleDto received {} ", postDto.toString());
+        Optional<PostModel> postModelOptional = postService.findById(postId);
+        if (!postModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found for this Category.");
+        }
+        var postModel = postModelOptional.get();
+        postModel.setTitle(postDto.getTitle());
+        postModel.setPost(postDto.getPost());
+        postModel.setDescription(postDto.getDescription());
+        postModel.setDateUpdate(LocalDateTime.now(ZoneId.of("UTC")));
+        postService.save(postModel);
+
+        log.debug("PUT updateModule moduleId saved {} ", postModel.getPostId());
+        log.info("Module updated successfully moduleId {} ", postModel.getPostId());
+        return ResponseEntity.status(HttpStatus.OK).body(postModel);
+    }
+
+    @CacheEvict(value = "postAllCache", allEntries = true)
     @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/posts/{postId}")
     public ResponseEntity<Object> deletePost(@PathVariable(value = "postId") UUID postId) {
@@ -96,26 +118,4 @@ public class PostContoller {
         log.info("Module deleted successfully postId {} ", postId);
         return ResponseEntity.status(HttpStatus.OK).body("Post deleted successfully.");
     }
-
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @PutMapping("/posts/{postId}")
-    public ResponseEntity<Object> updatePost(@PathVariable(value = "postId") UUID postId,
-                                             @RequestBody @Valid PostDto postDto) {
-
-        log.debug("PUT updateModule moduleDto received {} ", postDto.toString());
-        Optional<PostModel> postModelOptional = postService.findById(postId);
-        if (!postModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found for this Category.");
-        }
-        var postModel = postModelOptional.get();
-        postModel.setTitle(postModel.getTitle());
-        postModel.setPost(postModel.getPost());
-        postModel.setDescription(postModel.getDescription());
-        postService.save(postModel);
-
-        log.debug("PUT updateModule moduleId saved {} ", postModel.getPostId());
-        log.info("Module updated successfully moduleId {} ", postModel.getPostId());
-        return ResponseEntity.status(HttpStatus.OK).body(postModel);
-    }
-
 }
