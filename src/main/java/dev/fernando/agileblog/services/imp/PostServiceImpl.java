@@ -77,11 +77,11 @@ public class PostServiceImpl implements PostService {
                 continue;
             }
             EmailModel emailModel = new EmailModel();
-            emailModel.setEmailFrom("Blog Agil" + " <contato@metodologia-agil.com.br>");
+            emailModel.setEmailFrom("Blog Agil" + " <contato@agiledomain.com.br>");
             emailModel.setEmailTo(email.getEmailTo());
             emailModel.setSubject("Novo post no blog falando sobre: " + postModel.getTitle());
             emailModel.setName(email.getName());
-            emailModel.setText("Olá " + email.getName() + ", adicionamos um novo post com o tema '" + postModel.getTitle() + "'. Clique aqui para conferir: " + "https://metodologia-agil.com.br/post/" + postModel.getPostId());
+            emailModel.setText("Olá " + email.getName() + ", adicionamos um novo post com o tema '" + postModel.getTitle() + "'. Clique aqui para conferir: " + "https://agiledomain.com.br/postDetails" + postModel.getPostId());
             emailModel.setActiveNewsletter(true);
             emailService.sendEmail(emailModel);
         }

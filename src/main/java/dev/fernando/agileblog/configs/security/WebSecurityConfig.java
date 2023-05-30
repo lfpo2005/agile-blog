@@ -35,8 +35,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     AuthenticationEntryPointImpl authenticationEntryPoint;
 
+    public static final String[] LIST_CORS_URL = {
+            "https://metodologia-agil.com.br",
+            "http://localhost:4200",
+            "https://devluisoliveira.com.br/",
+            "https://agiledomain.com.br"
+    };
+
     public static final String[] AUTH_WHITELIST = {
-            "/quiz/start/**", //remover apos o google
             "/public/**",
             "/contact/**",
             "/auth/**",
@@ -64,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        List<String> allowedOrigins = Arrays.asList("https://metodologia-agil.com.br", "http://localhost:4200", "https://devluisoliveira.com.br/", "https://agiledomain.com.br");
+        List<String> allowedOrigins = Arrays.asList(LIST_CORS_URL);
         configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));

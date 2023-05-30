@@ -37,7 +37,7 @@ spring:
   mail:
     host: mocha6007.mochahost.com
     port: 465
-    username: metodologia-agil@devluisoliveira.com.br
+    username: contato@agiledomain.com.br
     password: '@Clf197197'
     protocol: smtp
     properties:
