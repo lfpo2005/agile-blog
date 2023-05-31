@@ -38,10 +38,10 @@ spring:
     ansi:
       enabled: Always
   mail:
-    host: mocha6007.mochahost.com
-    port: 465
-    username: contato@agiledomain.com.br
-    password: '@Clf197197'
+    host: ${SPRING_MAIL_HOST}
+    port: ${SPRING_MAIL_PORT}
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
     protocol: smtp
     properties:
       mail:
@@ -49,7 +49,7 @@ spring:
           auth: true
           ssl:
             enable: true
-            trust: mocha6007.mochahost.com
+            trust: ${SPRING_MAIL_TRUST}
   cache:
     type: caffeine
     caffeine:
