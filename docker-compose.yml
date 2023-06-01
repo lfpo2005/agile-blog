@@ -1,6 +1,54 @@
 version: "3.3"
 services:
 
+  agile-blog-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING.DATASOURCE.URL: jdbc:postgresql://spring_db_prod:5432/agileblog
+      SPRING.DATASOURCE.USERNAME: postgres
+      SPRING.DATASOURCE.PASSWORD: postgres
+    ports:
+      - 8090:8080
+    command: java -jar /app/app.jar
+    depends_on:
+      - spring_db_prod
+
+  agile-blog-preprod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: preprod
+      SPRING.DATASOURCE.URL: jdbc:postgresql://spring_db_preprod:5432/agileblog
+      SPRING.DATASOURCE.USERNAME: postgres
+      SPRING.DATASOURCE.PASSWORD: postgres
+    ports:
+      - 8091:8080
+    command: java -jar /app/app.jar
+    depends_on:
+      - spring_db_preprod
+
+  agile-blog-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING.DATASOURCE.URL: jdbc:postgresql://spring_db_dev:5432/agileblog
+      SPRING.DATASOURCE.USERNAME: postgres
+      SPRING.DATASOURCE.PASSWORD: postgres
+    ports:
+      - 8092:8080
+    command: java -jar /app/app.jar
+    depends_on:
+      - spring_db_dev
+
   spring_db:
     image: postgres:11
     container_name: agileblog
@@ -27,42 +75,6 @@ services:
       - 8081:80
     networks:
       - lfpo-network
-
-  agile-blog:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: always
-    environment:
-      SPRING.DATASOURCE.URL: jdbc:postgresql://spring_db:5432/agileblog
-      SPRING.DATASOURCE.USERNAME: postgres
-      SPRING.DATASOURCE.PASSWORD: postgres
-    ports:
-      - 8090:8080
-    command: java -jar /app/app.jar
-    depends_on:
-      - spring_db
-      - redis
-    networks:
-      - lfpo-network
-
-#  agile-blog:
-#    image: lfpo2005/agile-blog
-#    restart: always
-#    build: .
-#    working_dir: /agile-blog
-#    environment:
-#      SPRING.DATASOURCE.URL: jdbc:postgresql://spring_db:5432/agileblog
-#      SPRING.DATASOURCE.USERNAME: postgres
-#      SPRING.DATASOURCE.PASSWORD: postgres
-#    ports:
-#      - 8080:8080
-#    command: java -jar /agile-blog/app.jar
-#    depends_on:
-#      - spring_db
-#      - redis
-#    networks:
-#      - lfpo-network
 
 networks:
   lfpo-network:
