@@ -10,7 +10,7 @@
     </parent>
     <groupId>dev.fernando</groupId>
     <artifactId>agile-blog</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>R-1.0.0</version>
     <packaging>jar</packaging>
     <name>agile-blog</name>
     <description>agile-blog</description>

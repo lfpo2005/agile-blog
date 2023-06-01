@@ -1,0 +1,72 @@
+server:
+  port: ${SPRING_SERVER_PORT}
+  forward-headers-strategy: native
+  servlet:
+    context-path: '/blog'
+spring:
+  servlet:
+    multipart:
+      max-request-size: 1024MB
+      max-file-size: 1024MB
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  type: com.zaxxer.hikari.HikariDataSource
+  hikari:
+    connection-timeout: 20000
+    minimum-idle: 200
+    maximum-pool-size: 550
+    idle-timeout: 10000
+    pool-name: PoolHikari
+    auto-commit: false
+  dbcp2:
+    pool-prepared-statements: true
+    max-open-prepared-statements: 550
+  transaction:
+    rollback-on-commit-failure: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      jdbc:
+        lob.non-contextual-creation: true
+    properties:
+      hibernate:
+        show_sql: true
+  output:
+    ansi:
+      enabled: Always
+  mail:
+    host: mocha6007.mochahost.com
+    port: 465
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: mocha6007.mochahost.com
+  cache:
+    type: caffeine
+    caffeine:
+      specs:
+        postAllCache: maximumSize=500,expireAfterWrite=10m
+  mvc:
+    throw-exception-if-no-handler-found: true
+    resources:
+      add-mappings: false
+logging:
+  level:
+    com.blog: TRACE
+    root: INFO
+    org.springframework.cache: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate: INFO
+blog:
+  auth:
+    jwtSecret: ${SPRING_AUTH_JWTSECRET}
+    jwtExpirationMs: ${SPRING_AUTH_JWTEXPIRATIONMS}
