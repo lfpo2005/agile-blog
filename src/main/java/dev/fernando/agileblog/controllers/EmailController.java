@@ -33,7 +33,7 @@ public class EmailController {
         emailModel.setSubject("Confirmação de Inscrição na Newsletter");
         emailModel.setText("Olá " + emailDto.getName() + ", obrigado por se inscrever na nossa newsletter!");
         emailService.sendEmail(emailModel);
-        log.error("Error sending email --------------> emailId: {}", emailModel.getEmailId());
+        log.error("Error sending email Controller--------------> emailId: {}", emailModel.getEmailId());
         return new ResponseEntity<>(emailModel, HttpStatus.CREATED);
     }
 }

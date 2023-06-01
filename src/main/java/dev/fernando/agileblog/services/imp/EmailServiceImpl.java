@@ -44,7 +44,7 @@ public class EmailServiceImpl implements EmailService {
         } catch (MailException e) {
             emailModel.setStatusEmail(StatusEmail.ERROR);
             log.error("Error sending email", e);
-            log.error("Error sending email --------------> emailId: {}", emailModel.getEmailId());
+            log.error("Error sending email Service  --------------> emailId: {}", emailModel.getEmailId());
         } finally {
             return emailRepository.save(emailModel);
         }
