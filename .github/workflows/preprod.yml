@@ -1,8 +1,8 @@
-name: CI Main
+name: CI Preprod
 
 on:
   push:
-    branches: [main]
+    branches: [preprod]
 
 jobs:
   CI:
@@ -30,6 +30,6 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v4.0.0
         with:
-          context: .
-          push: true
-          tags: lfpo2005/agile-blog:${{ steps.get_version.outputs.VERSION }}
+          tags: |
+            lfpo2005/agile-blog:preprod
+            lfpo2005/agile-blog:latest
