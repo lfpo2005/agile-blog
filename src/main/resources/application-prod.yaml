@@ -71,3 +71,6 @@ blog:
   auth:
     jwtSecret: ${SPRING_AUTH_JWTSECRET}
     jwtExpirationMs: ${SPRING_AUTH_JWTEXPIRATIONMS}
+  email:
+    token: ${SPRING_EMAIL_TOKEN}
+    url: ${SPRING_EMAIL_URL}

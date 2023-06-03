@@ -5,7 +5,9 @@ import dev.fernando.agileblog.models.EmailModel;
 import dev.fernando.agileblog.repositories.EmailRepository;
 import dev.fernando.agileblog.services.EmailService;
 import lombok.extern.log4j.Log4j2;
+import okhttp3.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,12 +20,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-import javax.mail.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 
 @Log4j2
 @Service
@@ -37,25 +35,44 @@ public class EmailServiceImpl implements EmailService {
     JavaMailSender emailSender;
 
 
-    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    private static final String API_URL = "https://api.smtplw.com.br/v1/messages";
-    private static final String API_TOKEN = "38fdc8e5b60e3ef9768cb2d3f9de7149"; // substitua pelo token
 
+    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    @Value("${blog.email.url}")
+    private String API_URL;
+
+    @Value("${blog.email.token}")
+    private String API_TOKEN;
     @Transactional
     @Override
     public EmailModel sendEmail(EmailModel emailModel) {
         emailModel.setSendDateEmail(LocalDateTime.now());
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(emailModel.getEmailFrom());
-            message.setTo(emailModel.getEmailTo());
-            message.setSubject(emailModel.getSubject());
-            message.setText(emailModel.getText());
-            emailSender.send(message);
+        OkHttpClient client = new OkHttpClient();
 
+        String json = "{"
+                + "\"subject\": \"" + emailModel.getSubject() + "\","
+                + "\"body\": \"" + emailModel.getText() + "\","
+                + "\"from\": \"" + emailModel.getEmailFrom() + "\","
+                + "\"to\": \"" + emailModel.getEmailTo() + "\","
+                + "\"headers\": {\"Content-Type\": \"text/html\"}"
+                + "}";
+
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(API_URL)
+                .header("x-auth-token", API_TOKEN)
+                .post(body)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
             emailModel.setStatusEmail(StatusEmail.SENT);
             log.info("Email sending successfully -------------> emailId {}", emailModel.getEmailId());
-        } catch (MailException e) {
+
+            } else {
+                emailModel.setStatusEmail(StatusEmail.ERROR);
+            }
+        } catch (IOException e) {
             emailModel.setStatusEmail(StatusEmail.ERROR);
             log.error("Error sending email", e);
             log.error("Error sending email Service  --------------> emailId: {}", emailModel.getEmailId());
