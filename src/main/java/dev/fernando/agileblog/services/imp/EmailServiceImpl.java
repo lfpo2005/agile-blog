@@ -11,8 +11,20 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
+
+import javax.mail.*;
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 @Log4j2
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -24,13 +36,15 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     JavaMailSender emailSender;
 
+
+    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    private static final String API_URL = "https://api.smtplw.com.br/v1/messages";
+    private static final String API_TOKEN = "38fdc8e5b60e3ef9768cb2d3f9de7149"; // substitua pelo token
+
     @Transactional
     @Override
     public EmailModel sendEmail(EmailModel emailModel) {
         emailModel.setSendDateEmail(LocalDateTime.now());
-        if (emailRepository.existsByEmailTo(emailModel.getEmailTo())) {
-            return emailModel;
-        }
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(emailModel.getEmailFrom());

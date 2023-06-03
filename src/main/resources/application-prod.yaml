@@ -38,18 +38,19 @@ spring:
     ansi:
       enabled: Always
   mail:
-    host: mocha6007.mochahost.com
-    port: 465
+    host: ${SPRING_MAIL_HOST}
+    port: ${SPRING_MAIL_PORT}
     username: ${SPRING_MAIL_USERNAME}
     password: ${SPRING_MAIL_PASSWORD}
     protocol: smtp
+    sender:
+      name: Blog agil
+      email: contato@metodologia-agil.com.br
     properties:
-      mail:
-        smtp:
-          auth: true
-          ssl:
-            enable: true
-            trust: mocha6007.mochahost.com
+      smtp:
+        auth: true
+        ssl:
+          enable: true
   cache:
     type: caffeine
     caffeine:

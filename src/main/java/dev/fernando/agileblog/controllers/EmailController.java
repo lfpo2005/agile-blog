@@ -28,7 +28,7 @@ public class EmailController {
     public ResponseEntity<EmailModel> sendingEmail(@RequestBody @Valid EmailDto emailDto) {
         EmailModel emailModel = new EmailModel();
         BeanUtils.copyProperties(emailDto, emailModel);
-        emailModel.setEmailFrom("Blog Agil" + " <contato@agiledomain.com.br>");
+        emailModel.setEmailFrom("Blog Agil" + " <contato@metodologia-agil.com.br>");
         emailModel.setEmailTo(emailDto.getEmailTo());
         emailModel.setSubject("Confirmação de Inscrição na Newsletter");
         emailModel.setText("Olá " + emailDto.getName() + ", obrigado por se inscrever na nossa newsletter!");
