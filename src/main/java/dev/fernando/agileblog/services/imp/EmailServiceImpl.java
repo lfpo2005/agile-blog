@@ -26,9 +26,8 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     JavaMailSender emailSender;
 
-
-
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
     @Value("${blog.email.url}")
     private String API_URL;
 

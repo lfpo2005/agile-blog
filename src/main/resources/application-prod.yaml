@@ -73,4 +73,4 @@ blog:
     jwtExpirationMs: ${SPRING_AUTH_JWTEXPIRATIONMS}
   email:
     token: ${SPRING_EMAIL_TOKEN}
-    url: ${SPRING_EMAIL_URL}
+    url: https://api.smtplw.com.br/v1/messages
