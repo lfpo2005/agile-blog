@@ -24,5 +24,5 @@ jobs:
           context: .
           push: true
           tags: |
-            lfpo2005/agile-blog:${{ steps.get_version.outputs.VERSION }}
             lfpo2005/agile-blog:latest
+            lfpo2005/agile-blog:R-1.0.0
