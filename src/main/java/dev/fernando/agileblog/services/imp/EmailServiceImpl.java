@@ -5,20 +5,12 @@ import dev.fernando.agileblog.models.EmailModel;
 import dev.fernando.agileblog.repositories.EmailRepository;
 import dev.fernando.agileblog.services.EmailService;
 import lombok.extern.log4j.Log4j2;
-import okhttp3.MediaType;
+import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
 
 import java.io.IOException;
 import java.time.LocalDateTime;
