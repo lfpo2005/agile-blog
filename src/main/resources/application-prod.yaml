@@ -44,8 +44,8 @@ spring:
     password: ${SPRING_MAIL_PASSWORD}
     protocol: smtp
     sender:
-      name: Blog agil
-      email: contato@metodologia-agil.com.br
+      name: ${SPRING_MAIL_NAME}
+      email: ${SPRING_MAIL_EMAIL}
     properties:
       smtp:
         auth: true
