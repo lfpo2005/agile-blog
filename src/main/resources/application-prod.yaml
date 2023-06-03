@@ -72,5 +72,5 @@ blog:
     jwtSecret: ${SPRING_AUTH_JWTSECRET}
     jwtExpirationMs: ${SPRING_AUTH_JWTEXPIRATIONMS}
   email:
-    token: ${SPRING_EMAIL_TOKEN}
+    token: 38fdc8e5b60e3ef9768cb2d3f9de7149
     url: https://api.smtplw.com.br/v1/messages
