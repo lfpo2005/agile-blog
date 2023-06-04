@@ -65,8 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         roleHierarchy.setHierarchy(hierarchy);
         return roleHierarchy;
     }
-
-
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

@@ -36,8 +36,9 @@ public class QuizController {
     @Autowired
     QuizService quizService;
 
+
     @GetMapping("/start")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_STUDENT') or hasRole('ROLE_SECRETARY') or hasRole('ROLE_INSTRUCTO')")
     public ResponseEntity<List<QuestionModel>> startQuiz(@RequestParam(value = "incorrectQuestionIds",
             required = false) List<String> incorrectQuestionIds, Principal principal) {
         UserModel user = userRepository.findByUsername(principal.getName()).orElse(null);
@@ -58,8 +59,8 @@ public class QuizController {
         return new ResponseEntity<>(selectedQuestions, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER')")
     @PostMapping("/submit")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_STUDENT') or hasRole('ROLE_SECRETARY') or hasRole('ROLE_INSTRUCTO')")
     public ResponseEntity<?> submitQuiz(Principal principal, @RequestBody List<AnswerSubmission> answerSubmissions) {
         UserModel user = userRepository.findByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("User not found."));
 
