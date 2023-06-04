@@ -53,7 +53,7 @@ public class QuizController {
         }
 
         List<QuestionModel> allQuestions = quizService.getAllQuestions();
-        List<QuestionModel> selectedQuestions = quizService.addIncorrectQuestionsFromPreviousAttempt(allQuestions, incorrectQuestionUUIDs, 5);
+        List<QuestionModel> selectedQuestions = quizService.addIncorrectQuestionsFromPreviousAttempt(allQuestions, incorrectQuestionUUIDs, 80);
 
         return new ResponseEntity<>(selectedQuestions, HttpStatus.OK);
     }

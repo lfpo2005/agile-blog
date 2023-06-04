@@ -73,3 +73,7 @@ blog:
   auth:
     jwtSecret: t7w!z%C*F-JaNdRgUkXp2s5v8x/A?D(G+KbPeShVmYq3t6w9z$B&E)H@McQfTjWn
     jwtExpirationMs: 14400000
+  email:
+    token: 38fdc8e5b60e3ef9768cb2d3f9de7149
+    url: https://api.smtplw.com.br/v1/messages
+
