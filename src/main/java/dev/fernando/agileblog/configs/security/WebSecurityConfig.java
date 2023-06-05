@@ -37,9 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String[] LIST_CORS_URL = {
             "https://metodologia-agil.com.br",
-            "http://localhost:4200",
-            "https://devluisoliveira.com.br/",
-            "https://agiledomain.com.br"
+            "http://localhost:4200"
+
     };
 
     public static final String[] AUTH_WHITELIST = {
