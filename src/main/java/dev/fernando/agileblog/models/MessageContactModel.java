@@ -22,10 +22,16 @@ public class MessageContactModel implements Serializable {
     @Column(nullable = false, length = 1000)
     private String message;
     @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
+    private String userAnswer;
+    @Column(nullable = false)
     private String email;
     @Enumerated(EnumType.STRING)
     private AnsweredType answered;
     private boolean visualized = false;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime creationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    private LocalDateTime dateAnswer;
 }
