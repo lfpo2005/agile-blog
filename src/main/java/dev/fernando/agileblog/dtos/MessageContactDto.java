@@ -18,5 +18,4 @@ public class MessageContactDto {
     private boolean visualized;
     private LocalDateTime creationDate;
     private LocalDateTime dateAnswer;
-
 }

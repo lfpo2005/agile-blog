@@ -23,7 +23,6 @@ public class MessageContactModel implements Serializable {
     private String message;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
     private String userAnswer;
     @Column(nullable = false)
     private String email;
