@@ -18,7 +18,6 @@ public class MessageContactModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID messageContactId;
-
     @Column(nullable = false, length = 1000)
     private String message;
     @Column(nullable = false)
