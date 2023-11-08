@@ -3,9 +3,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-extras
-extras/postgres_db/**
-extras/**
+
+extras/db/**
+
 .mvn
 .env
 ### STS ###
@@ -16,9 +16,8 @@ extras/**
 .settings
 .springBeans
 .sts4-cache
-extras/**
 ### IntelliJ IDEA ###
-.idea
+agile-blog/.idea
 *.iws
 *.iml
 *.ipr

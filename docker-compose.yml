@@ -3,8 +3,8 @@ services:
 
   agile-blog-prod:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: agile-blog
+      dockerfile: agile-blog/Dockerfile
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
@@ -19,8 +19,8 @@ services:
 
   agile-blog-preprod:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: agile-blog
+      dockerfile: agile-blog/Dockerfile
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: preprod
@@ -35,8 +35,8 @@ services:
 
   agile-blog-dev:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: agile-blog
+      dockerfile: agile-blog/Dockerfile
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
